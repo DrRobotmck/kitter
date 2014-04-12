@@ -34,16 +34,16 @@ ActiveRecord::Schema.define(version: 20140412050122) do
     t.integer "follower_id"
   end
 
+  create_table "hashtag_history", force: true do |t|
+    t.integer "tweet_id"
+    t.integer "hashtag_id"
+  end
+
   create_table "hashtags", force: true do |t|
     t.integer  "num_of_times_used", default: 1
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "hashtags_tweets", id: false, force: true do |t|
-    t.integer "tweet_id",   null: false
-    t.integer "hashtag_id", null: false
   end
 
   create_table "replies", id: false, force: true do |t|
