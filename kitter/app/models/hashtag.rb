@@ -1,6 +1,6 @@
 class Hashtag < ActiveRecord::Base
-  has_and_belongs_to_many :tweets
+  has_and_belongs_to_many :tweets, join_table: :hashtag_history
 
-  validate :content, :num_of_times_used, presence: true
-  validate_numericality_of :num_of_times_used, equal_to: 1 , on: :create
+  validates :content, :num_of_times_used, presence: true
+  validates :num_of_times_used, numericality: {equal_to: 1}, on: :create
 end
