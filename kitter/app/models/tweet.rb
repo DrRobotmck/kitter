@@ -1,13 +1,14 @@
 require 'embedly'
 require 'json'
-require 'pry'
+# require 'pry'
 
 class Tweet < ActiveRecord::Base
   belongs_to :user
-  has_many :retweets, dependent: :destroy
   has_many :replies, dependent: :destroy
-  has_many :favorites, dependent: :destroy
-  has_and_belongs_to_many :hashtags
+  has_many :retweets, dependent: :destroy
+  has_many :favorites,dependent: :destroy
+
+  has_and_belongs_to_many :hashtags, join_table: :hashtag_history
 
   validates :content, :user_id, :num_of_favs, :num_of_retweets, presence: true
 
@@ -18,6 +19,6 @@ class Tweet < ActiveRecord::Base
   json_obj = JSON.pretty_generate(obj[0].marshal_dump)
   puts json_obj
   end
-  binding.pry
+  # binding.pry
 
 end
