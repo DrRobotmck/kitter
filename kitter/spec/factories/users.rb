@@ -2,16 +2,17 @@
 
 FactoryGirl.define do
   factory :user do
-    username "MyString"
-    name "MyString"
-    email "MyString"
-    background_photo_url "MyString"
-    profile_photo_url "MyString"
-    bio "MyString"
-    website "MyString"
-    verified false
-    location "MyString"
-    password_digest "MyString"
+    username "joeschmoe"
+    name "joe"
+    email "joe@schmoe.com"
+    background_photo_url "jpeg.jpeg"
+    profile_photo_url "jpeg.jpg"
+    bio "just yr avg joe"
+    website "avejoe.com"
+    verified true
+    location "NYC"
+    password "factory88"
+    password_confirmation "factory88"
     country_id 1
   end
 end
