@@ -1,8 +1,8 @@
 class CreateFollowersJoinTable < ActiveRecord::Migration
   def change
-    create_join_table :users, :followers do |t|
-      # t.index [:user_id, :follower_id]
-      # t.index [:follower_id, :user_id]
+    create_table :followers, id: false do |t|
+      t.references :user
+      t.integer :follower_id
     end
   end
 end
