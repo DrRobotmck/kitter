@@ -3,6 +3,8 @@
 
 # User Model
 # rails g model user username name email background_photo_url profile_photo_url bio website verified:boolean location password_digest country_id:integer
+# add default photo_url and background_photo_url
+# rails g migration add_default_photo_url_and_background_photo_url_to_user
 
 # Tweet Model
 # rails g model tweet content user:references
