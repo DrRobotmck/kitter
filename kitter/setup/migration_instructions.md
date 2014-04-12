@@ -1,10 +1,10 @@
 # # migration commands
 
+# Initialize Rails App
+# rails new kitter -d postgresql
 
 # User Model
 # rails g model user username name email background_photo_url profile_photo_url bio website verified:boolean location password_digest country_id:integer
-# add default photo_url and background_photo_url
-# rails g migration add_default_profile_photo_url_and_background_photo_url_to_user
 
 # Tweet Model
 # rails g model tweet content user:references
@@ -26,6 +26,9 @@
 
 # Hashtag Tweet Join Migration
 # rails g migration create_twitter_hashtags_join_table tweet:references hashtag:references
+# add default num_of_times_used value to 1
+#rails g migration add_default_value_num_of_times_used_to_hasht
+
 
 # Favorites Migration
 # rails g migration create_favorites tweet:references user:references
