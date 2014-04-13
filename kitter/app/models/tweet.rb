@@ -1,6 +1,6 @@
+require 'active_record'
 require 'embedly'
-require 'json'
-# require 'pry'
+require 'pry'
 
 class Tweet < ActiveRecord::Base
   belongs_to :user
@@ -12,26 +12,41 @@ class Tweet < ActiveRecord::Base
 
   validates :content, :user_id, :num_of_favs, :num_of_retweets, presence: true
 
-  def load_media(url)
-  embedly_api=Embedly::API.new
-  obj = embedly_api.oembed url: "#{url}"
-  puts obj[0].marshal_dump
-  json_obj = JSON.pretty_generate(obj[0].marshal_dump)
-  puts json_obj
-  end
-  # binding.pry
-
-  def scan_tweet(tweet)
-    tweet=find_mentions(tweet)
-    tweet=find_hashtags(tweet)
-    # tweet=find_links(tweet)
-    return tweet
+  def scan_tweet(content)
+    find_links(content) && find_hashtags(content) && find_mentions(content)
   end
 
-  def find_media
-    self.content
+  def embed_media(url)
+    embedly_api = Embedly::API.new :key => '1417d995b5a74c61b647102980df6107'
+    obj = (embedly_api.oembed :url => url)[0]
+    if obj[:type]=='video'
+      obj[:html] if obj[:type]=='video'
+    elsif obj[:type]=='photo'
+      "<img class='tweet_display-photo' src='#{url}'>"
+    else
+      if obj[:title]
+        url=obj[:title]
+      end
+      "<a href='url'>#{url}</a>"
+    end
   end
 
+  def uri?(string)
+    parser=URI::Parser.new
+    uri = parser.parse(string)
+    %w( http https www. ).include?(uri.scheme)
+    rescue URI::BadURIError
+    false
+    rescue URI::InvalidURIError
+    false
+  end
+
+  def find_links(string)
+    string.split.each do |word|
+    string.sub!(word,self.embed_media(word)) if self.uri?(word)
+    end
+    return string
+  end
 
   def find_mentions(string)
     string.split.each do |word|
