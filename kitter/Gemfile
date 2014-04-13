@@ -55,4 +55,8 @@ group :development, :test do
   gem 'embedly'
 end
 
+#Twitter Bootstrap
+
+gem 'twitter-bootstrap-rails'
+
 
