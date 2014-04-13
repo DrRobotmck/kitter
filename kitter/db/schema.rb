@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140412050122) do
+ActiveRecord::Schema.define(version: 20140413010832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20140412050122) do
     t.string   "profile_photo_url",    default: "http://img2.wikia.nocookie.net/__cb20130302002623/glee/images/5/50/20120814044316!Pusheen.png"
     t.string   "bio"
     t.string   "website"
-    t.boolean  "verified"
+    t.boolean  "verified",             default: false
     t.string   "location"
     t.string   "password_digest"
     t.integer  "country_id"
