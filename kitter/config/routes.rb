@@ -14,12 +14,11 @@ Kitter::Application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  root 'users#index'
+  root 'sessions#new'
 
   get '/login' => 'sessions#new'
   post '/sessions' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
-
 
   resources :users do
     get '/favorite_tweets' => 'users#favorite_tweets'
@@ -29,7 +28,9 @@ Kitter::Application.routes.draw do
     resources :tweets, shallow: true
   end
 
-  resources :hashtags, only: [:index, :show]
+
+  get '/hashtags/:hashtag' => 'hashtags#show', as: :hashtag
+  get '/hashtags' => 'hashtags#index'
 
   # Example resource route with options:
   #   resources :products do
