@@ -1,4 +1,4 @@
-class SessionsControllers < ApplicationController
+class SessionsController < ApplicationController
 
   def new
   end
@@ -16,7 +16,8 @@ class SessionsControllers < ApplicationController
       session[user_id]=@user.id
       redirect_to @user
     else
-      render 'new', notice: "USER NOT FOUND. Double check login info"
+      flash[:notice]="USER NOT FOUND. Double check login info."
+      render 'new'
     end
 
   end
