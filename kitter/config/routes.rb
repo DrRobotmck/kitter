@@ -22,6 +22,10 @@ Kitter::Application.routes.draw do
 
 
   resources :users do
+    get '/favorite_tweets' => 'users#favorite_tweets'
+    get '/followers' => 'users#followers'
+    get '/following' => 'users#following'
+    get '/notifications' => 'users#notifications'
     resources :tweets, shallow: true
   end
 
