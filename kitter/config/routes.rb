@@ -25,8 +25,14 @@ Kitter::Application.routes.draw do
     get '/followers' => 'users#followers'
     get '/following' => 'users#following'
     get '/notifications' => 'users#notifications'
+    post '/follow' => 'users#follow'
+    post '/unfollow' => 'users#unfollow'
+    post '/block' => 'users#block'
+    post '/unblock' => 'users#unblock'
     resources :tweets, shallow: true
   end
+
+  get '/tweets'=>  'tweets#index'
 
 
   get '/hashtags/:hashtag' => 'hashtags#show', as: :hashtag
