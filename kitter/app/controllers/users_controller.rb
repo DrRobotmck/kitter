@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user=User.find(params[:id])
+    @tweets=@user.tweets
   end
 
   def new
@@ -69,6 +70,30 @@ class UsersController < ApplicationController
 
   def favorite_tweets
     @favorites = @user.favorites
+  end
+
+  def follow
+    other_user = User.find(params[:user_id])
+    current_user.follow(other_user)
+    redirect_to other_user, notice: "You are now following #{other_user.username}! Good luck."
+  end
+
+  def unfollow
+    other_user = User.find(params[:user_id])
+    current_user.unfollow(other_user)
+    redirect_to other_user, notice: "Congratulations. You have unfollowed #{other_user.username}."
+  end
+
+  def block
+    other_user = User.find(params[:user_id])
+    current_user.block(other_user)
+    redirect_to other_user, notice: "You have blocked #{other_user.username}, finally."
+  end
+
+  def unblock
+    other_user = User.find(params[:user_id])
+    current_user.unblock(other_user)
+    redirect_to other_user, notice: "You have unblocked #{other_user.username}! Good to see you two getting back together."
   end
 
   private
