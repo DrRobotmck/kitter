@@ -8,13 +8,17 @@ class User < ActiveRecord::Base
   has_many :retweets
   has_many :retweets, through: :tweets
   has_many :favorites
-  has_many :favorites, through: :tweets
+  # has_many :favorites, through: :tweets
 
-  has_many :follows, foreign_key: 'user_id', :class_name=>"Follower"
-  has_many :followers, :through=>:follows, dependent: :destroy
+  has_many :notifications
 
-  has_many :blockees, foreign_key: 'user_id', :class_name=>"Blockee"
-  has_many :blocked_users, :through=>:blockees, dependent: :destroy
+  has_many :favorites, foreign_key: 'user_id', class_name: 'Favorite', dependent: :destroy
+
+  has_many :follows, foreign_key: 'user_id', :class_name=>'Follow'
+  has_many :followers, through: :follows, dependent: :destroy
+
+  has_many :blockees, foreign_key: 'user_id', :class_name=>'Blockee'
+  has_many :blocked_users, through: :blockees, dependent: :destroy
 
 
   validates :username, :name, :email, :password, :password_confirmation, presence: true
@@ -84,18 +88,9 @@ class User < ActiveRecord::Base
      blocked_users.delete(other_user)
   end
 
-  def favorite_tweet(tweet)
-
-
-
-    tweet.update_num_of_favs
-  end
 
   def retweet(tweet)
 
-
-
-    tweet.update_num_of_retweets
   end
 
 end
