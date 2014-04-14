@@ -11,27 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140413010832) do
+ActiveRecord::Schema.define(version: 20140414041716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "blockees", id: false, force: true do |t|
+  create_table "blockees", force: true do |t|
     t.integer "user_id"
     t.integer "blocked_user_id"
   end
 
   create_table "favorites", id: false, force: true do |t|
-    t.integer "tweet_id"
-    t.integer "user_id"
+    t.integer  "tweet_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "favorites", ["tweet_id"], name: "index_favorites_on_tweet_id", using: :btree
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
-  create_table "follows", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "follower_id"
+  create_table "follows", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "follower_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "hashtag_history", force: true do |t|
@@ -46,7 +50,16 @@ ActiveRecord::Schema.define(version: 20140413010832) do
     t.datetime "updated_at"
   end
 
-  create_table "replies", id: false, force: true do |t|
+  create_table "notifications", id: false, force: true do |t|
+    t.string   "kind"
+    t.integer  "user_id"
+    t.integer  "poster_id"
+    t.integer  "tweet_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "replies", force: true do |t|
     t.integer  "user_id"
     t.integer  "tweet_id"
     t.string   "content"
@@ -58,8 +71,10 @@ ActiveRecord::Schema.define(version: 20140413010832) do
   add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "retweets", id: false, force: true do |t|
-    t.integer "tweet_id"
-    t.integer "user_id"
+    t.integer  "tweet_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "retweets", ["tweet_id"], name: "index_retweets_on_tweet_id", using: :btree
