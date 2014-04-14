@@ -81,11 +81,4 @@ class Tweet < ActiveRecord::Base
     update(num_of_retweets: self.num_of_retweets+=1)
   end
 
-  def favorite(favoriter)
-    new_favorite = Favorite.create(user: favoriter,tweet: self)
-    favoriter.favorites << new_favorite
-    Notification.create(user:self.user,tweet:self,poster_id: favoriter.id, kind: 'favorited')
-    update_num_of_favs
-  end
-
 end

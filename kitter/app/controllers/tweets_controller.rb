@@ -31,8 +31,14 @@ class TweetsController < ApplicationController
 
   def favorite
     @tweet=Tweet.find(params[:tweet_id])
-    @tweet.favorite(current_user)
+    current_user.favorite(@tweet)
     redirect_to @tweet, notice: 'favorited'
+  end
+
+  def retweet
+    @tweet=Tweet.find(params[:tweet_id])
+    current_user.retweet(@tweet)
+    redirect_to @tweet, notice: 'retweeted'
   end
 
   def destroy
