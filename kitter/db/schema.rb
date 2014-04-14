@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(version: 20140413010832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "blocked_users", id: false, force: true do |t|
-    t.integer "user_id",    null: false
-    t.integer "blocked_id", null: false
+  create_table "blockees", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "blocked_user_id"
   end
 
   create_table "favorites", id: false, force: true do |t|
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20140413010832) do
   add_index "favorites", ["tweet_id"], name: "index_favorites_on_tweet_id", using: :btree
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
-  create_table "followers", id: false, force: true do |t|
+  create_table "follows", id: false, force: true do |t|
     t.integer "user_id"
     t.integer "follower_id"
   end
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20140413010832) do
   add_index "retweets", ["user_id"], name: "index_retweets_on_user_id", using: :btree
 
   create_table "tweets", force: true do |t|
-    t.string   "content"
+    t.text     "content"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

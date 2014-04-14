@@ -1,8 +1,8 @@
 class CreateBlockedUsersJoinTable < ActiveRecord::Migration
   def change
-    create_join_table :users, :blocked do |t|
-      # t.index [:user_id, :blocked_user_id]
-      # t.index [:blocked_user_id, :user_id]
+    create_table 'blockees', id: false,force:true do |t|
+      t.references :user
+      t.references :blocked_user
     end
   end
 end
