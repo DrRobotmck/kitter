@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     end
 
     if @user && @user.authenticate(params[:password])
-      session[user_id]=@user.id
+      session[:user_id]=@user.id
       redirect_to @user
     else
       flash[:notice]="USER NOT FOUND. Double check login info."
