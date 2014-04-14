@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
 
-
   has_secure_password
 
   has_many :tweets, dependent: :destroy
@@ -11,10 +10,12 @@ class User < ActiveRecord::Base
   has_many :favorites
   has_many :favorites, through: :tweets
 
-  has_and_belongs_to_many :followers,
-    foreign_key: 'follower_id', join_table: :followers
-  has_and_belongs_to_many :blocked_users,
-    foreign_key: 'blocked_id', join_table: :blocked_users
+  has_many :follows, foreign_key: 'user_id', :class_name=>"Follower"
+  has_many :followers, :through=>:follows, dependent: :destroy
+
+  has_many :blockees, foreign_key: 'user_id', :class_name=>"Blockee"
+  has_many :blocked_users, :through=>:blockees, dependent: :destroy
+
 
   validates :username, :name, :email, :password, :password_confirmation, presence: true
   validates :bio, :website, :location, :country_id, presence: true, :if => lambda{|user| user.current_step == "additional_info"}
@@ -65,6 +66,36 @@ class User < ActiveRecord::Base
   #array of possible steps, based on partial names
   def steps
     %w[sign_up additional_info]
+  end
+
+  def follow(other_user)
+    followers << other_user
+  end
+
+  def unfollow(other_user)
+     followers.delete(other_user)
+  end
+
+  def block(other_user)
+     blocked_users << other_user
+  end
+
+  def unblock(other_user)
+     blocked_users.delete(other_user)
+  end
+
+  def favorite_tweet(tweet)
+
+
+
+    tweet.update_num_of_favs
+  end
+
+  def retweet(tweet)
+
+
+
+    tweet.update_num_of_retweets
   end
 
 end
