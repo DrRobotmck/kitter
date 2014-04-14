@@ -29,10 +29,13 @@ Kitter::Application.routes.draw do
     post '/unfollow' => 'users#unfollow'
     post '/block' => 'users#block'
     post '/unblock' => 'users#unblock'
-    resources :tweets, shallow: true
+    resources :tweets, shallow: true do
+       post '/favorite' => 'tweets#favorite'
+       post '/retweet' => 'tweets#retweet'
+    end
   end
 
-  get '/tweets'=>  'tweets#index'
+
 
 
   get '/hashtags/:hashtag' => 'hashtags#show', as: :hashtag
