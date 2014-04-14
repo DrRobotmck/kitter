@@ -89,6 +89,12 @@ class User < ActiveRecord::Base
   end
 
 
+  def favorite(tweet)
+    self.favorites.create!(tweet: tweet)
+    tweet.user.notifications.create!(tweet:tweet,poster_id: self.id, kind: 'favorited')
+    tweet.update_num_of_favs
+  end
+
   def retweet(tweet)
 
   end
