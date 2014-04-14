@@ -11,12 +11,17 @@ class UsersController < ApplicationController
   end
 
   def new
+    if current_user
+      redirect_to current_user, notice: "You already have an account!"
+    else
     session[:user_values] ||= {}
     @user=User.new(session[:user_values])
     @user.current_step=session[:user_step]
+    end
   end
 
   def create
+
     session[:user_values].deep_merge!(params[:user]) if params[:user]
     @user=User.new(session[:user_values])
     @user.current_step=session[:user_step]
