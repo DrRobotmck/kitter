@@ -3,16 +3,10 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :tweets, dependent: :destroy
-  has_many :replies
-  has_many :replies, through: :tweets
-  has_many :retweets
-  has_many :retweets, through: :tweets
-  has_many :favorites
-  # has_many :favorites, through: :tweets
-
-  has_many :notifications
-
-  has_many :favorites, foreign_key: 'user_id', class_name: 'Favorite', dependent: :destroy
+  has_many :replies, dependent: :destroy
+  has_many :retweets, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   has_many :follows, foreign_key: 'user_id', :class_name=>'Follow'
   has_many :followers, through: :follows, dependent: :destroy
@@ -96,7 +90,9 @@ class User < ActiveRecord::Base
   end
 
   def retweet(tweet)
-
+    self.retweets.create!(tweet: tweet)
+    tweet.user.notifications.create!(tweet:tweet,poster_id: self.id, kind: 'retweeted')
+    tweet.update_num_of_retweets
   end
 
 end
