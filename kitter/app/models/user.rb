@@ -5,11 +5,14 @@ class User < ActiveRecord::Base
   has_many :tweets, dependent: :destroy
   has_many :replies, dependent: :destroy
   has_many :retweets, dependent: :destroy
+  has_many :retweeted_tweets, through: :retweets, class_name: "Tweet", source: :tweet
+  # has_and_belongs_to_many :retweeted_tweets, join_table: "retweets", class_name: "Tweet", association_foreign_key: "tweet_id"
   has_many :favorites, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
-  has_many :follows, foreign_key: 'user_id', :class_name=>'Follow'
-  has_many :followers, through: :follows, dependent: :destroy
+  has_many :follows, dependent: :destroy
+  has_many :followers, through: :follows, class_name: "User", source: :follower
+  has_many :followees, through: :follows, class_name: "User", source: :user
 
   has_many :blockees, foreign_key: 'user_id', :class_name=>'Blockee'
   has_many :blocked_users, through: :blockees, dependent: :destroy
