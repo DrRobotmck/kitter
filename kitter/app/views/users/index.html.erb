@@ -1,0 +1,10 @@
+<h1>All Users</h1>
+
+<% @users.each do |user| %>
+ <%= link_to user do %>
+  <div class="user_index col-md-2">
+  <img class="user_index_image" src="<%= user.profile_photo_url%>">
+  <%= user.username %>
+  </div>
+  <% end %>
+  <% end %>
