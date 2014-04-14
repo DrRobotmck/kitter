@@ -1,12 +1,12 @@
-require 'active_record'
 require 'embedly'
-require 'pry'
 
 class Tweet < ActiveRecord::Base
   belongs_to :user
   has_many :replies, dependent: :destroy
   has_many :retweets, dependent: :destroy
-  has_many :favorites,dependent: :destroy
+  # has_many :favorites,dependent: :destroy
+
+  has_many :favorites, foreign_key: 'tweet_id', class_name: 'Favorite',dependent: :destroy
 
   has_and_belongs_to_many :hashtags, join_table: :hashtag_history
 
@@ -14,6 +14,23 @@ class Tweet < ActiveRecord::Base
 
   def scan_tweet(content)
     find_links(content) && find_hashtags(content) && find_mentions(content)
+  end
+
+   def find_links(string)
+    string.split.each do |word|
+    string.sub!(word,self.embed_media(word)) if self.uri?(word)
+    end
+    return string
+  end
+
+  def uri?(string)
+    parser=URI::Parser.new
+    uri = parser.parse(string)
+    %w( http https www. ).include?(uri.scheme)
+    rescue URI::BadURIError
+    false
+    rescue URI::InvalidURIError
+    false
   end
 
   def embed_media(url)
@@ -31,35 +48,6 @@ class Tweet < ActiveRecord::Base
     end
   end
 
-  def uri?(string)
-    parser=URI::Parser.new
-    uri = parser.parse(string)
-    %w( http https www. ).include?(uri.scheme)
-    rescue URI::BadURIError
-    false
-    rescue URI::InvalidURIError
-    false
-  end
-
-  def find_links(string)
-    string.split.each do |word|
-    string.sub!(word,self.embed_media(word)) if self.uri?(word)
-    end
-    return string
-  end
-
-  def find_mentions(string)
-    string.split.each do |word|
-      if word.match(/@\w{1,}/)
-        user=User.find_by(username: (word.delete("@")))
-        if user
-        string.sub!(word,"<a href='/users/#{user.id}'>#{word}</a>")
-        end
-      end
-    end
-    return string
-  end
-
   def find_hashtags(string)
     string.split.each do |word|
       if word.match(/#\w{1,}/)
@@ -73,5 +61,31 @@ class Tweet < ActiveRecord::Base
      return string
   end
 
+    def find_mentions(string)
+    string.split.each do |word|
+      if word.match(/@\w{1,}/)
+        user=User.find_by(username: (word.delete("@")))
+        if user
+        string.sub!(word,"<a href='/users/#{user.id}'>#{word}</a>")
+        end
+      end
+    end
+    return string
+  end
+
+  def update_num_of_favs
+    update(num_of_favs: self.num_of_favs+=1)
+  end
+
+  def update_num_of_retweets
+    update(num_of_retweets: self.num_of_retweets+=1)
+  end
+
+  def favorite(favoriter)
+    new_favorite = Favorite.create(user: favoriter,tweet: self)
+    favoriter.favorites << new_favorite
+    Notification.create(user:self.user,tweet:self,poster_id: favoriter.id, kind: 'favorited')
+    update_num_of_favs
+  end
 
 end
