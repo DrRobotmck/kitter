@@ -1,92 +1,9 @@
-<div id="main_page_left_sidebar">
 
 <div id="main_page_user">
 
-  <%= link_to @user do %>
-  <div id="main_page_user_box" style="background-image:url('<%=@user.background_photo_url%>')">
-  <img src="<%= @user.profile_photo_url%>" alt="" class="main_page_user_photo" />
-  <br>
-  <%= @user.name %>
-  <br>
-  @<%= @user.username %>
-  </div>
-  <% end %>
-
-  <%= link_to @user do %>
-  <div class="user_info">
-    TWEETS
-    <br>
-     <%= @user.tweets.length%>
-  </div>
-  <% end%>
-
-  <%= link_to user_following_path(@user) do %>
-  <div class="user_info">
-    FOLLOWING
-    <br>
-    <%= @user.followers.length %>
-  </div>
-  <% end%>
-
-  <%= link_to user_followers_path(@user) do %>
-  <div class="user_info">
-    FOLLOWERS
-    <br>
-    <%=@user.followees.length%>
-  </div>
-  <% end%>
-
-   <%= flash[:notice] %>
-
-   <%= form_for @path do |f| %>
-   <%= f.text_field :content, placeholder: 'limit 140 characters'  %>
-   <%= f.submit "Meow!" %>
-   <% end %>
-
-</div>
-
-<div id="who_to_follow">
-<h3>Who To Follow | <%=link_to "View All", users_path%></h3>
 
 
-<% @users.each do |user|  %>
-<% unless current_user == user %>
-<img width="100px" src="<%=user.profile_photo_url%>" alt="" />
-<%= user.name %> <%= link_to "@#{user.username}", user_path(user)  %>
-
-<% unless current_user.followers.include?(user) %>
-<%= form_tag user_follow_path(user) do  %>
-<%= submit_tag "Follow" %>
-<% end %>
-<% end %>
-
-<% if current_user.followers.include?(user) %>
-<%= form_tag user_unfollow_path(user) do %>
-<%= submit_tag "Unfollow" %>
-<% end %>
-<% end %>
-<% end %>
-
-<% end %>
-</div>
-
-<div id="hashtags">
-<h3>Trends</h3>
-<%@hashtags.each do |hashtag|%>
-<%= link_to "##{hashtag.content}", hashtag_path(hashtag) %>
-<br>
-<% end %>
-</div>
-
-<div id="main_page_sidebar_footer">
-&copy; Trinity Montoya
-<a href="#">About</a>
-<a href="#">Github</a>
-<a href="#">Personal Page</a>
-</div>
-</div>
-
-<div id="newsfeed">
+<div class="right_sidebar">
 <h2>Tweets</h2>
 <% @tweets.each do |tweet| %>
 <img width = 100px src="<%= tweet.user.profile_photo_url%>" alt="" />

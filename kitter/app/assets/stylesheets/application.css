@@ -7,7 +7,139 @@
  *
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
- *
+
+ *= require twitter-bootstrap-static/bootstrap
  *= require_self
  *= require_tree .
  */
+
+body {
+  color: red
+  font-family: Helvetica;
+  background-image: url('http://subtlepatterns.com/patterns/green_dust_scratch.png')
+}
+
+a {
+  text-decoration: none;
+  font-family: Helvetica;
+}
+
+/*HOME LAYOUT*/
+
+
+/*HOME NAV*/
+#home_nav{
+  background-color: white;
+  height: 50px;
+}
+
+#home_nav li {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-size: 14px;
+
+}
+
+/*HOME SIDEBAR*/
+
+.home_sidebar {
+  width: 290px;
+  height: 194px;
+  padding: 0;
+}
+#home_sidebar_user_info {
+  height: 194px;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+}
+
+#home_sidebar_user_info img {
+  width: 200px;
+  margin: 25px 52px 0 52px;
+}
+
+#home_sidebar_user_info p {
+  background-color: white;
+  margin: 0;
+  padding: 2px 0;
+
+}
+
+#home_sidebar_user_stats{
+  background-color:white;
+  text-align: center;
+}
+
+#home_sidebar_user_stats li {
+  list-style: none;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+.numbers {
+  font-weight: bold;
+  font-size: 23px;
+  color: green;
+}
+
+#tweet_box {
+  background-color: rgb(188,235,222);
+  height: 70px;
+  padding: 5px;
+  border-radius: 0 0 6px 6px;
+}
+
+input#tweet_content {
+  width: 254px;
+  text-align: center;
+  padding: 8px;
+  margin: 3px 3px;
+}
+
+input[value="Meow!"] {
+margin: 2px 5px;
+text-align: center;
+}
+
+
+.nav_icon {
+}
+
+
+.individual_user{
+
+}
+
+.individual_user_photo{
+  width: 400px
+}
+
+.user_index{}
+
+img.user_index_image{
+  width: 150px;
+}
+
+.tweet_display_photo{}
+
+img.main_page_user_photo{
+  width: 150px;
+}
+
+.left_sidebar {
+  display: inline-block;
+  width: 300px;
+}
+
+.right_sidebar {
+  display: inline-block;
+  width: 600px;
+}
+
+.user_info {
+  display: inline-block;
+}
