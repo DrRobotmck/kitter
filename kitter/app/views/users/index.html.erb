@@ -7,4 +7,20 @@
   <%= user.username %>
   </div>
   <% end %>
+
+  <% unless current_user == user %>
+
+  <% unless current_user.followers.include?(user) %>
+  <%= form_tag user_follow_path(user) do  %>
+  <%= submit_tag "Follow" %>
+  <% end %>
+  <% end %>
+
+  <% if current_user.followers.include?(user) %>
+  <%= form_tag user_unfollow_path(user) do %>
+  <%= submit_tag "Unfollow" %>
+  <% end %>
+  <% end %>
+  <% end %>
+
   <% end %>
