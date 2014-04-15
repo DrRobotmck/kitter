@@ -1,6 +1,7 @@
 <%= @tweet.content.html_safe %>
 <%= link_to @tweet.user.username, @tweet.user %>
 Favorites:<%= @tweet.num_of_favs %>
+Retweets: <%= @tweet.num_of_retweets %>
 <%= @tweet.created_at.strftime("%D") %>
 
 
