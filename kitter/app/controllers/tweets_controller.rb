@@ -26,7 +26,7 @@ class TweetsController < ApplicationController
     if @tweet.save
       redirect_to tweet_path(@tweet), notice: "Successfully created!"
     else
-      flash[:notice]="Please correct the following errors:"
+      flash[:notice]="Please correct the following errors: \n Tweet is too long."
       render 'new'
     end
   end
