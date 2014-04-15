@@ -11,6 +11,7 @@ class Tweet < ActiveRecord::Base
   has_and_belongs_to_many :hashtags, join_table: :hashtag_history
 
   validates :content, :user_id, :num_of_favs, :num_of_retweets, presence: true
+  validates :content, length: {maximum: 200}
 
   def scan_tweet(content)
     find_links(content) && find_hashtags(content) && find_mentions(content)
