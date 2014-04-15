@@ -21,14 +21,14 @@ describe User do
   it{should validate_presence_of :email}
   it{should validate_presence_of :bio}
   it{should validate_presence_of :website}
-  it{should validate_presence_of :verified}
   it{should validate_presence_of :location}
   it{should validate_presence_of :password}
   it{should validate_presence_of :password_confirmation}
   it{should validate_presence_of :country_id}
 
-  it{should validate_presence_of(:background_photo_url).on(:create)}
-  it{should validate_presence_of(:profile_photo_url).on(:create)}
+  # it{should validate_presence_of(:background_photo_url).on(:create)}
+  # it{should validate_presence_of(:profile_photo_url).on(:create)}
+  # it{should validate_presence_of(:verified).on(:create)}
 
   it{should validate_numericality_of(:country_id).only_integer}
 
@@ -36,7 +36,7 @@ describe User do
   it{should ensure_length_of(:password).is_at_least(5)}
 
   it{should validate_uniqueness_of(:username).case_insensitive}
-  it{should validate_uniqueness_of(:email).with_message('That email is already registered.')}
+  it{should validate_uniqueness_of(:email)}
 
 
   it{should validate_correct_email_format_of(:email)}
