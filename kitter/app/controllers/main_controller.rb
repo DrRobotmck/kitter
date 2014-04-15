@@ -9,6 +9,7 @@ class MainController<ApplicationController
     @tweets=Tweet.all
     @tweet=Tweet.new
     @path=[@user,@tweet]
+    render :layout => 'home'
   end
 
 end

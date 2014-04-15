@@ -21,7 +21,7 @@ Kitter::Application.routes.draw do
   get '/logout' => 'sessions#destroy'
 
   resources :users do
-    get '/favorite_tweets' => 'users#favorite_tweets'
+    get '/favorites' => 'users#favorites'
     get '/followers' => 'users#followers'
     get '/following' => 'users#following'
     get '/notifications' => 'users#notifications'
