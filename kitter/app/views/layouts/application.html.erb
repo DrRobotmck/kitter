@@ -18,10 +18,17 @@
   <% end %>
 
   <% if current_user %>
-  <%= link_to "New Tweet", new_user_tweet_path(current_user) %>
-  <%= link_to "All Users", users_path %>
-  <%= link_to "All Tweets", user_tweets_path(current_user) %>
+  <%= link_to "Notifications", user_notifications_path(current_user)%>
+  <%= link_to "Discover", hashtags_path %>
+  <%= link_to "Your account", user_path(current_user)%>
+
+  <%= link_to "catlogo", root_path%>
+
   <%= link_to "Account", edit_user_path(current_user)%>
+
+
+  <%= link_to "New Tweet", new_user_tweet_path(current_user) %>
+
   <%= link_to "Logout", logout_path%>
   <% end %>
 </nav>
