@@ -1,26 +1,38 @@
-
-<div id="main_page_user">
-
-
-
 <div class="right_sidebar">
 <h2>Tweets</h2>
+<hr style="border-bottom: solid 1px gray">
 <% @tweets.each do |tweet| %>
-<img width = 100px src="<%= tweet.user.profile_photo_url%>" alt="" />
-<%=tweet.user.name%>
+<div class="each_tweet">
+<img class="tweet_user_photo" src="<%= tweet.user.profile_photo_url%>" alt="" />
+<div class="tweet_info">
+  <p>
+    <span class="username"><%=tweet.user.name%></span>
 <%=link_to "@#{tweet.user.username}", user_path(tweet.user)%>
+.
 <%=link_to "#{tweet.created_at.strftime("%D")}", tweet_path(tweet)%>
-<div style="width=200px"><%=tweet.content.html_safe%></div>
+</p>
+<div style="width=200px">
+  <%=tweet.content.html_safe%>
+</div>
+<div class="home_tweet_actions">
+
+<%= form_tag tweet_path(tweet), method: :get do %>
+<%= submit_tag "Reply" %>
+<% end %>
+
+
+<%= form_tag tweet_retweet_path(tweet) do %>
+<%= submit_tag "Retweet" %>
+<% end %>
+
 <% unless current_user.favorites.include? (tweet) %>
 <%= form_tag tweet_favorite_path(tweet) do%>
 <%= submit_tag "Favorite" %>
 <% end %>
 <% end %>
 
-<% unless current_user == tweet.user %>
-<%= form_tag tweet_retweet_path(tweet) do %>
-<%= submit_tag "Retweet" %>
-<% end %>
-<% end %>
+</div>
+</div>
+</div>
 <%end%>
 </div>
