@@ -5,11 +5,11 @@ class MainController<ApplicationController
     users= User.all
     users = users.each.reject {|user| @user.followers.include?(user)}
     @users=users.sample(3)
-    @hashtags=Hashtag.all
-    @tweets=Tweet.all
+    @hashtags=Hashtag.all.sample(10)
+    @tweets=Tweet.all.sort_by {|tweet| tweet.updated_at}
     @tweet=Tweet.new
     @path=[@user,@tweet]
-    render :layout => 'home'
+    render :layout => 'welcome'
   end
 
 end
