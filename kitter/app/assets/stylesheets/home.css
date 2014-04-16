@@ -1,0 +1,180 @@
+/*HOME LAYOUT*/
+
+
+/*HOME NAV*/
+#home_nav{
+  background-color: whitesmoke;
+  height: 50px;
+}
+
+#home_nav li {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-size: 14px;
+
+}
+
+/*HOME SIDEBAR*/
+
+.home_sidebar {
+  width: 290px;
+  height: 194px;
+  padding: 0;
+}
+#home_sidebar_user_info {
+  height: 194px;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+}
+
+#home_sidebar_user_info img {
+  width: 200px;
+  margin: 25px 52px 0 52px;
+}
+
+#home_sidebar_user_info p {
+  background-color: whitesmoke;
+  margin: 0;
+  padding: 2px 0;
+
+}
+
+#home_sidebar_user_stats{
+  background-color:whitesmoke;
+  text-align: center;
+}
+
+#home_sidebar_user_stats li {
+  list-style: none;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+.numbers {
+  font-weight: bold;
+  font-size: 23px;
+  color: green;
+}
+
+.num_link {
+  font-size: 13px;
+}
+
+
+#tweet_box {
+  background-color: rgb(188,235,222);
+  height: 70px;
+  padding: 5px;
+  border-radius: 0 0 6px 6px;
+}
+
+input#tweet_content {
+  width: 254px;
+  text-align: center;
+  padding: 8px;
+  margin: 3px 3px;
+}
+
+input[value="Meow!"] {
+margin: 2px 5px;
+text-align: center;
+}
+
+
+#home_sidebar_who_to_follow{
+  background-color:whitesmoke;
+  padding: 10px;
+}
+#home_sidebar_who_to_follow p {
+  font-size: 18px;
+  display: inline;
+}
+
+#home_sidebar_who_to_follow img {
+  height: 60px;
+  width: 60px;
+}
+.who_to_follow_info {
+  display: inline-block;
+  margin: 15px 0 10px 0;
+}
+
+.follow {
+  display: inline-block;
+}
+
+#home_sidebar_who_to_follow form {
+  display: inline-block;
+}
+
+
+#home_sidebar_hashtags {
+  background-color:whitesmoke;
+  padding: 10px;
+}
+
+#home_sidebar_footer {
+  background-color: whitesmoke;
+  padding: 10px;
+}
+
+.home_div {
+  border-radius: 6px;
+  margin: 15px 0 0 0;
+}
+
+.right_sidebar {
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 6px;
+  display: inline-block;
+  width: 600px;
+}
+
+.each_tweet {
+  height: 104px;
+  border-bottom: 1px solid gray;
+  padding: 0 0 5px 0;
+}
+
+.tweet_user_photo {
+  width: 100px;
+  display: inline-block;
+  margin: -106px 0 0 0;
+}
+
+.each_tweet div.tweet_info{
+  display: inline-block;;
+  font-size:16px;
+  width: 490px;
+  margin: 5px 0 0 0;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.user_info {
+  display: inline-block;
+}
+
+
+.home_tweet_actions {
+  margin: 15px 0 0 280px;
+}
+
+.home_tweet_actions form {
+  display: inline-block;
+  margin: 0 7px 0 0;
+}
+
+
+
+.left_sidebar {
+  display: inline-block;
+  width: 300px;
+}
