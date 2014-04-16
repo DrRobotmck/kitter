@@ -9,7 +9,6 @@ class MainController<ApplicationController
     @tweets=Tweet.all.sort_by {|tweet| tweet.updated_at}
     @tweet=Tweet.new
     @path=[@user,@tweet]
-    render :layout => 'welcome'
   end
 
 end

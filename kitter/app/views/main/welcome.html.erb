@@ -1,38 +1,137 @@
-<div class="right_sidebar">
-<h2>Tweets</h2>
-<hr style="border-bottom: solid 1px gray">
-<% @tweets.each do |tweet| %>
-<div class="each_tweet">
-<img class="tweet_user_photo" src="<%= tweet.user.profile_photo_url%>" alt="" />
-<div class="tweet_info">
-  <p>
-    <span class="username"><%=tweet.user.name%></span>
-<%=link_to "@#{tweet.user.username}", user_path(tweet.user)%>
-.
-<%=link_to "#{tweet.created_at.strftime("%D")}", tweet_path(tweet)%>
-</p>
-<div style="width=200px">
-  <%=tweet.content.html_safe%>
-</div>
-<div class="home_tweet_actions">
 
-<%= form_tag tweet_path(tweet), method: :get do %>
-<%= submit_tag "Reply" %>
-<% end %>
+        <div class="span4">
+          <div class="well sidebar-nav home_sidebar">
 
 
-<%= form_tag tweet_retweet_path(tweet) do %>
-<%= submit_tag "Retweet" %>
-<% end %>
+              <%= link_to @user do %>
+              <div id="home_sidebar_user_info" style="background-image:url('<%=@user.background_photo_url%>')">
+              <img src="<%= @user.profile_photo_url%>" alt=""/>
+              <p><%= @user.name %></p>
+              <p><%= "@#{@user.username}" %></p>
+              </div>
+              <% end %>
 
-<% unless current_user.favorites.include? (tweet) %>
-<%= form_tag tweet_favorite_path(tweet) do%>
-<%= submit_tag "Favorite" %>
-<% end %>
-<% end %>
+              <%= link_to @user do %>
+              <div id="home_sidebar_user_stats" class="home_div">
 
-</div>
-</div>
-</div>
-<%end%>
-</div>
+              <li>
+                Tweets
+                <br>
+                 <span class="numbers"><%= @user.tweets.length%></span>
+              </li>
+              <% end%>
+
+              <%= link_to user_following_path(@user) do %>
+              <li>
+                Following
+                <br>
+                <span class="numbers"><%= @user.followers.length %></span>
+              </li>
+              <% end%>
+
+              <%= link_to user_followers_path(@user) do %>
+              <li>
+                Followers
+                <br>
+                <span class="numbers"><%=@user.followees.length%></span>
+              </div>
+            </li>
+              <% end%>
+              <div id="tweet_box">
+                <%= flash[:notice] %>
+
+                <%= form_for @path do |f| %>
+                <%= f.text_field :content, placeholder: 'limit 140 characters',maxlength: 140  %>
+                <%= f.submit "Meow!" %>
+                <% end %>
+              </div>
+
+              <div id="home_sidebar_who_to_follow" class="home_div">
+              <p>Who To Follow | <span class="num_link"><%=link_to "View All", users_path%></span></p>
+
+
+              <% @users.each do |user|  %>
+              <% unless current_user == user %>
+              <div class="who_to_follow_info">
+              <img src="<%=user.profile_photo_url%>" alt="" />
+              <div class="follow">
+              <p><%= user.name %> <%= link_to "@#{user.username}", user_path(user)  %></p>
+              <br>
+              <% unless current_user.followers.include?(user) %>
+              <%= form_tag user_follow_path(user) do  %>
+              <%= submit_tag "Follow" %>
+              <% end %>
+              <% end %>
+              </div>
+              </div>
+              <% end %>
+
+              <% end %>
+              </div>
+
+              <div id="home_sidebar_hashtags" class="home_div">
+              <h3>Trends</h3>
+              <%@hashtags.each do |hashtag|%>
+              <%= link_to "##{hashtag.content}", hashtag_path(hashtag) %>
+              <br>
+              <% end %>
+              </div>
+
+              <div id="home_sidebar_footer" class="home_div">
+              &copy; Trinity Montoya 2014
+              <br>
+              <a href="#">About</a>
+              <br>
+              <a href="#">Github</a>
+              <br>
+              <a href="#">Personal Page</a>
+              </div>
+
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span6">
+          <%= bootstrap_flash %>
+
+
+        <div class="right_sidebar">
+        <h2>Tweets</h2>
+        <hr style="border-bottom: solid 1px gray">
+        <% @tweets.each do |tweet| %>
+        <div class="each_tweet">
+        <img class="tweet_user_photo" src="<%= tweet.user.profile_photo_url%>" alt="" />
+        <div class="tweet_info">
+          <p>
+            <span class="username"><%=tweet.user.name%></span>
+        <%=link_to "@#{tweet.user.username}", user_path(tweet.user)%>
+        .
+        <%=link_to "#{tweet.created_at.strftime("%D")}", tweet_path(tweet)%>
+        </p>
+        <div style="width=200px">
+          <%=tweet.content.html_safe%>
+        </div>
+        <div class="home_tweet_actions">
+
+        <%= form_tag tweet_path(tweet), method: :get do %>
+        <%= submit_tag "Reply" %>
+        <% end %>
+
+
+        <%= form_tag tweet_retweet_path(tweet) do %>
+        <%= submit_tag "Retweet" %>
+        <% end %>
+
+        <% unless current_user.favorites.include? (tweet) %>
+        <%= form_tag tweet_favorite_path(tweet) do%>
+        <%= submit_tag "Favorite" %>
+        <% end %>
+        <% end %>
+
+        </div>
+        </div>
+        </div>
+        <%end%>
+        </div>
+
+
+        </div>
