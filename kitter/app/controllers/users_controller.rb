@@ -7,7 +7,13 @@ class UsersController < ApplicationController
 
   def show
     @user=User.find(params[:id])
-    @tweets=@user.tweets
+    retweets = @user.retweeted_tweets
+    @tweets=(@user.tweets+retweets)
+    @tweets = @tweets.sort_by{|t| t.created_at}
+    @users=User.all
+    @hashtags=Hashtag.all
+    @path=@user,Tweet.new
+    render :layout => 'user_static'
   end
 
   def new
@@ -67,14 +73,26 @@ class UsersController < ApplicationController
   end
 
   def followers
+    @user=User.find(params[:user_id])
+    @users=User.all
+    @hashtags=Hashtag.all
+    @path = @user, Tweet.new
     @followers = @user.followers
+    render :layout => 'user_static'
   end
 
   def following
+    @user=User.find(params[:user_id])
+    @path = @user, Tweet.new
+    @users=User.all
+    @followees = @user.followees
+    @hashtags=Hashtag.all
+    render :layout => 'user_static'
   end
 
   def favorite_tweets
     @favorites = @user.favorites
+    render :layout => 'user_static'
   end
 
   def follow
