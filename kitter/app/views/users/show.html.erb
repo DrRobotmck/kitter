@@ -1,45 +1,6 @@
-<%= flash[:notice] %>
-
-<div class="individual_user col-md-5" style="background-image: url('<%=@user.background_photo_url%>')">
-<%= @user.username %>
-<img class="individual_user_photo" src="<%= @user.profile_photo_url %>">
-<%= @user.location %>
-<%= @user.bio %>
-</div>
-
-
 <%= @user.username %>'s Tweets
 
 <% @tweets.each do |tweet| %>
   <%= tweet.content.html_safe %>
   <%= tweet.created_at.strftime("%D") %>
-<% end %>
-
-
-<% unless current_user == @user %>
-
-<% unless current_user.followers.include?(@user) %>
-<%= form_tag user_follow_path(@user) do  %>
-<%= submit_tag "Follow" %>
-<% end %>
-<% end %>
-
-<% if current_user.followers.include?(@user) %>
-<%= form_tag user_unfollow_path(@user) do %>
-<%= submit_tag "Unfollow" %>
-<% end %>
-<% end %>
-
-<% unless current_user.blocked_users.include?(@user) %>
-<%= form_tag user_block_path(@user) do %>
-<%= submit_tag "Block" %>
-<% end %>
-<% end %>
-
-<% if current_user.blocked_users.include?(@user) %>
-<%= form_tag user_unblock_path(@user) do %>
-<%= submit_tag "Unblock" %>
-<% end %>
-<% end %>
-
 <% end %>
