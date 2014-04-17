@@ -1,0 +1,38 @@
+<h3>Following</h3>
+
+<% @followees.each do |follower| %>
+  <img src="<%= follower.profile_photo_url%>" alt="" />
+  <%= link_to follower do %>
+  <%= follower.name %>
+  <%= "@#{follower.username}" %>
+  <% end %>
+  <%= follower.bio %>
+
+  <% unless current_user == follower %>
+  <% unless current_user.blocked_users.include?(follower) %>
+  <%= form_tag user_block_path(follower) do %>
+  <%= submit_tag "Block" %>
+  <% end %>
+  <% end %>
+
+  <% if current_user.blocked_users.include?(follower) %>
+  <%= form_tag user_unblock_path(follower) do %>
+  <%= submit_tag "Unblock" %>
+  <% end %>
+  <% end %>
+
+  <% unless current_user.followings.include?(follower) %>
+  <%= form_tag user_follow_path(follower) do  %>
+  <%= submit_tag "Follow" %>
+  <% end %>
+  <% end %>
+
+  <% if current_user.followings.include?(follower) %>
+  <%= form_tag user_unfollow_path(follower) do %>
+  <%= submit_tag "Unfollow" %>
+  <% end %>
+  <% end %>
+  <% end %>
+
+
+<% end %>
