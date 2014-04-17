@@ -1,179 +1,141 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Kitter</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= stylesheet_link_tag "bootstrap_and_overrides", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<div class="container-fluid">
-<nav>
-  <%= link_to "Home", root_path%>
-  <% unless current_user %>
-  <%= link_to "Login", login_path%>
-  <%= link_to "New User", new_user_path%>
-  <% end %>
-
-  <% if current_user %>
-  <%= link_to "Notifications", user_notifications_path(current_user)%>
-  <%= link_to "Discover", hashtags_path %>
-  <%= link_to "Your account", user_path(current_user)%>
-
-  <%= link_to "catlogo", root_path%>
-
-  <%= link_to "Account", edit_user_path(current_user)%>
-
-
-  <%= link_to "New Tweet", new_user_tweet_path(current_user) %>
-
-  <%= link_to "Logout", logout_path%>
-  <% end %>
-</nav>
+<%= render template: "layouts/application" %>
 
 
 <div class="left_sidebar">
 
-<nav class="user_profile">
-<li><%= link_to "Tweets", user_path(@user) %></li>
-<li><%= link_to "Following", user_following_path(@user) %></li>
-<li><%= link_to "Followers", user_followers_path(@user) %></li>
-<li><%= link_to "Favorites", user_favorites_path(@user) %></li>
-</nav>
+  <nav class="user_profile">
+    <li><%= link_to "Tweets", user_path(@user) %></li>
+    <li><%= link_to "Following", user_following_path(@user) %></li>
+    <li><%= link_to "Followers", user_followers_path(@user) %></li>
+    <li><%= link_to "Favorites", user_favorites_path(@user) %></li>
+  </nav>
 
-<% unless current_user == @user %>
-<div id="tweet_to">
-  <h3>Tweet to <%= @user.username%></h3>
-<%= form_for @path do |f| %>
-<%= f.text_field :content, placeholder: "limit 140 characters"  %>
-<%= f.submit "Meow!" %>
-<% end %>
+  <% unless current_user == @user %>
+  <div id="tweet_to">
+    <h3>Tweet to <%= @user.username%></h3>
+  <%= form_for @path do |f| %>
+  <%= f.text_field :content, placeholder: "limit 140 characters"  %>
+  <%= f.submit "Meow!" %>
+  <% end %>
+
+  </div>
+  <% end %>
+
+  <div id="photos_and_videos">
+    <h3>Photos and Videos</h3>
+  </div>
+
+  <div id="who_to_follow">
+    <h3>Who To Follow | <%=link_to "View All", users_path%></h3>
+
+
+    <% @users.each do |user|  %>
+    <% unless current_user == user %>
+    <img width="100px" src="<%=user.profile_photo_url%>" alt="" />
+    <%= user.name %> <%= link_to "@#{user.username}", user_path(user)  %>
+
+    <% unless current_user.followers.include?(user) %>
+    <%= form_tag user_follow_path(user) do  %>
+    <%= submit_tag "Follow" %>
+    <% end %>
+    <% end %>
+
+    <% end %>
+
+    <% end %>
+  </div>
+
+  <div id="user_hashtags">
+    <h3>Trends</h3>
+    <%@hashtags.each do |hashtag|%>
+    <%= link_to "##{hashtag.content}", hashtag_path(hashtag) %>
+    <br>
+    <% end %>
+  </div>
+
+  <div id="main_page_sidebar_footer">
+  &copy; Trinity Montoya
+    <a href="#">About</a>
+    <a href="#">Github</a>
+    <a href="#">Personal Page</a>
+  </div>
 
 </div>
-<% end %>
-
-<div id="photos_and_videos">
-<h3>Photos and Videos</h3>
-</div>
-
-<div id="who_to_follow">
-<h3>Who To Follow | <%=link_to "View All", users_path%></h3>
-
-
-<% @users.each do |user|  %>
-<% unless current_user == user %>
-<img width="100px" src="<%=user.profile_photo_url%>" alt="" />
-<%= user.name %> <%= link_to "@#{user.username}", user_path(user)  %>
-
-<% unless current_user.followers.include?(user) %>
-<%= form_tag user_follow_path(user) do  %>
-<%= submit_tag "Follow" %>
-<% end %>
-<% end %>
-
-<% end %>
-
-<% end %>
-</div>
-
-<div id="user_hashtags">
-<h3>Trends</h3>
-<%@hashtags.each do |hashtag|%>
-<%= link_to "##{hashtag.content}", hashtag_path(hashtag) %>
-<br>
-<% end %>
-</div>
-
-<div id="main_page_sidebar_footer">
-&copy; Trinity Montoya
-<a href="#">About</a>
-<a href="#">Github</a>
-<a href="#">Personal Page</a>
-</div>
-
-</div>
-
-
 
 
 
 <div class="right_sidebar">
 
-<%= flash[:notice] %>
+  <%= flash[:notice] %>
 
-<div class="individual_user col-md-5" style="background-image: url('<%=@user.background_photo_url%>')">
-<img class="individual_user_photo" src="<%= @user.profile_photo_url %>">
-<%= @user.name %>
-<%= @user.username %>
-<%= @user.bio %>
-<%= @user.location %>
-<%= link_to @user.website, @user.website %>
+  <div class="individual_user col-md-5" style="background-image: url('<%=@user.background_photo_url%>')">
+    <img class="individual_user_photo" src="<%= @user.profile_photo_url %>">
+    <%= @user.name %>
+    <%= @user.username %>
+    <%= @user.bio %>
+    <%= @user.location %>
+    <%= link_to @user.website, @user.website %>
+  </div>
+
+  <div class="user_info_container">
+      <%= link_to @user do %>
+      <div class="user_info">
+        TWEETS
+        <br>
+         <%= @user.tweets.length%>
+      </div>
+      <% end%>
+
+      <%= link_to user_following_path(@user) do %>
+      <div class="user_info">
+        FOLLOWING
+        <br>
+        <%= @user.followers.length %>
+      </div>
+      <% end%>
+
+      <%= link_to user_followers_path(@user) do %>
+      <div class="user_info">
+        FOLLOWERS
+        <br>
+        <%=@user.followees.length%>
+      </div>
+      <% end%>
+
+      <% if @user == current_user%>
+        <%= link_to "Edit profile", edit_user_path(@user)%>
+      <% else%>
+
+        <% unless current_user.blocked_users.include?(@user) %>
+          <%= form_tag user_block_path(@user) do %>
+          <%= submit_tag "Block" %>
+          <% end %>
+        <% end %>
+
+        <% if current_user.blocked_users.include?(@user) %>
+          <%= form_tag user_unblock_path(@user) do %>
+          <%= submit_tag "Unblock" %>
+          <% end %>
+        <% end %>
+
+        <% unless current_user.followers.include?(@user) %>
+          <%= form_tag user_follow_path(@user) do  %>
+          <%= submit_tag "Follow" %>
+          <% end %>
+        <% end %>
+
+        <% if current_user.followers.include?(@user) %>
+          <%= form_tag user_unfollow_path(@user) do %>
+          <%= submit_tag "Unfollow" %>
+          <% end %>
+        <% end %>
+
+      <% end %>
+
+    </div>
+
+
+  <%=yield%>
+
+
 </div>
-<div class="user_info_container">
-<%= link_to @user do %>
-<div class="user_info">
-  TWEETS
-  <br>
-   <%= @user.tweets.length%>
-</div>
-<% end%>
-
-<%= link_to user_following_path(@user) do %>
-<div class="user_info">
-  FOLLOWING
-  <br>
-  <%= @user.followers.length %>
-</div>
-<% end%>
-
-<%= link_to user_followers_path(@user) do %>
-<div class="user_info">
-  FOLLOWERS
-  <br>
-  <%=@user.followees.length%>
-</div>
-<% end%>
-
-<% if @user == current_user%>
-<%= link_to "Edit profile", edit_user_path(@user)%>
-<% else%>
-
-  <% unless current_user.blocked_users.include?(@user) %>
-  <%= form_tag user_block_path(@user) do %>
-  <%= submit_tag "Block" %>
-  <% end %>
-  <% end %>
-
-  <% if current_user.blocked_users.include?(@user) %>
-  <%= form_tag user_unblock_path(@user) do %>
-  <%= submit_tag "Unblock" %>
-  <% end %>
-  <% end %>
-
-  <% unless current_user.followers.include?(@user) %>
-  <%= form_tag user_follow_path(@user) do  %>
-  <%= submit_tag "Follow" %>
-  <% end %>
-  <% end %>
-
-  <% if current_user.followers.include?(@user) %>
-  <%= form_tag user_unfollow_path(@user) do %>
-  <%= submit_tag "Unfollow" %>
-  <% end %>
-  <% end %>
-
-<% end %>
-
-</div>
-
-
-<%=yield%>
-
-
-</div>
-</div>
-
-</body>
-</html>
